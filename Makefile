@@ -1,11 +1,13 @@
 NAME	=   test
-HEADER  =   header.h
+HEADER  =   ./header.h
 
-SRCS_UTILS =   $(shell ls ./utils/*.c)
+# SRCS_UTILS =   $(shell ls ./utils/*.c)
 
-SRCS	=   ${SRCS_UTILS} main.c
+SRCS	=    main.c
 
 CFLAGS	= -Wall -Wextra -Werror
+
+LFLAGS	=	-L./mlx -lmlx -framework OpenGL -framework AppKit
 
 RM		= rm -rf
 
@@ -15,17 +17,17 @@ OBJS	=	$(SRCS:%.c=%.o)
 
 all:		$(NAME)
 
-$(NAME): 	$(OBJS) $(HEADER)
-			$(CC) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) ${OBJS}
+$(NAME): 	$(OBJS)
+			$(CC) ${LFLAGS} ${OBJS} -o $(NAME)
 
-%.o: 		%.c
-			$(CC) $(CFLAGS) -Imlx -c $< -o $@
+%.o: 		%.c $(HEADER)
+			$(CC) $(CFLAGS) -I$(HEADER) -Imlx -c $< -o $@
 
 clean:
-			$(RM) ${OBJS} ${BONUS_OBJS}
+			$(RM) ${OBJS}
 
 fclean:		clean
-			$(RM) $(NAME) $(BONUS_NAME)
+			$(RM) $(NAME)
 
 re:			fclean all
 
