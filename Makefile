@@ -1,34 +1,80 @@
-NAME	=   test
-HEADER  =   ./header.h
+NAME = fdf
 
-# SRCS_UTILS =   $(shell ls ./utils/*.c)
+LIBRARIES = -lmlx -lm -lft -L$(LIBFT_DIRECTORY) -L$(MINILIBX_DIRECTORY) -framework OpenGL -framework AppKit 
+INCLUDES = -I$(HEADERS_DIRECTORY) -I$(MINILIBX_HEADERS)
 
-SRCS	=    main.c
+# Headers
+HEADERS_DIRECTORY = -I./includes/
+HEADERS = $(shell ls ./includes/*.h)
 
-CFLAGS	= -Wall -Wextra -Werror
+# Minilibx
+MINILIBX = $(MINILIBX_DIRECTORY)libmlx.a
+MINILIBX_DIRECTORY = ./minilibx/
+MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
-LFLAGS	=	-L./mlx -lmlx -framework OpenGL -framework AppKit
+# Libft_gnl
+LIBFT = $(LIBFT_DIRECTORY)libft_gnl.a
+LIBFT_DIRECTORY = ./libft_gnl/
+LIBFT_HEADERS = ./libft_gnl/includes/
 
-RM		= rm -rf
+# Sources
+SOURCES_DIRECTORY = ./sources/
+SOURCES = $(shell ls ./sources/*.c)
 
-CC		=   gcc
+# OBJS files
+OBJS = $(SOURCES:%.c=%.o)
+OBJS_MINILIBX = $(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
 
-OBJS	=	$(SRCS:%.c=%.o)
+# Compilation
+CC = gcc
+C_FLAGS = -Wall -Wextra -Werror -O3
 
-all:		$(NAME)
+# Colors
+GREEN = \033[0;32m
+RED = \033[0;31m
+RESET = \033[0m
 
-$(NAME): 	$(OBJS)
-			$(CC) ${LFLAGS} ${OBJS} -o $(NAME)
+# Utils
+RM = rm -rf
 
-%.o: 		%.c $(HEADER)
-			$(CC) $(CFLAGS) -I$(HEADER) -Imlx -c $< -o $@
+.PHONY: all clean fclean re
+
+all: $(NAME)
+
+
+$(NAME): $(LIBFT) $(MINILIBX) $(OBJS) Makefile
+	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJS) -o $(NAME)
+	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+
+%.o: %.c
+	$(CC) $(C_FLAGS) $(INCLUDES) -c $< -o $@
+# $(OBJECTS_LIB)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
+# 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
+# 	@echo "$(GREEN).$(RESET)\c"
+
+$(LIBFT):
+	@echo "$(NAME): $(GREEN)Creating $(LIBFT)...$(RESET)"
+	@$(MAKE) -sC $(LIBFT_DIRECTORY)
+
+$(MINILIBX):
+	@echo "$(NAME): $(GREEN)Creating $(MINILIBX)...$(RESET)"
+	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
 
 clean:
-			$(RM) ${OBJS}
+	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
+	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
+	@$(RM) -rf $(OBJS)
+	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
 
-fclean:		clean
-			$(RM) $(NAME)
+fclean: clean
+	@rm -f $(MINILIBX)
+	@echo "$(NAME): $(RED)$(MINILIBX) was deleted$(RESET)"
+	@rm -f $(LIBFT)
+	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
 
-re:			fclean all
-
-.PHONY: clean fclean re
+re:
+	@$(MAKE) fclean
+	@$(MAKE) all
