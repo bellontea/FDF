@@ -1,8 +1,15 @@
 #include "fdf.h"
 
+int ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
 int	main(int argc, char **argv)
 {
-	t_fdf fdf;
+	t_fdf *fdf;
 	int fd;
 	t_map *map;
 
@@ -12,35 +19,27 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 
-	fdf.height = 0;
-	fdf.width = 0;
-	fdf.zoom = 30;
-	fdf.map = NULL;
-	fdf.width_win = 1000;
-	fdf.height_win = 1000;
-	fd = open(argv[1], O_RDONLY);
+	fd = open(argv[1], O_RDWR);
 	if (fd == -1)
 	{
 		perror("Error");
 		return (1);
 	}
-	ft_read_map(fd, &fdf);
+	fdf = ft_init_fdf();
+	ft_read_map(fd, fdf);
 	close(fd);
+//	map = fdf.map;
+	// while(map)
+	// {
+	// 	for(int i = 0; i < fdf.width; i++)
+	// 		printf("%3d", map->coords[i]);
+	// 	map = map->next;
+	// 	printf("\n");
+	// }
 
-	map = fdf.map;
-	while(map)
-	{
-		for(int i = 0; i < fdf.width; i++)
-			printf("%3d", map->coords[i]);
-		map = map->next;
-		printf("\n");
-	}
+	fdf->cam->zoom = ft_min((WIN_WIDTH / fdf->width) / 2, (WIN_HEIGHT / fdf->height) / 2);
+	ft_draw_map(fdf);
 
-	fdf.mlx_ptr = mlx_init();
-	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, fdf.width_win, fdf.height_win, "FDF");
-
-	ft_draw_map(&fdf);
-
-	mlx_loop(fdf.mlx_ptr);
+	mlx_loop(fdf->mlx_ptr);
 }
 
