@@ -1,6 +1,6 @@
 #include "fdf.h"
 
-void ft_fill_line(char **coords_char, int **coords)
+void ft_fill_line(t_map *map, char **coords_char, int **coords)
 {
 	int i;
 
@@ -8,6 +8,10 @@ void ft_fill_line(char **coords_char, int **coords)
 	while (coords_char[i])
 	{
 		(*coords)[i] = ft_atoi(coords_char[i]);
+		if (map->z_min > (*coords)[i])
+			map->z_min = (*coords)[i];
+		if (map->z_max < (*coords)[i])
+			map->z_max = (*coords)[i];
 		i++;
 	}
 }
@@ -22,8 +26,11 @@ t_map *ft_init_map(int y, char **coords_char, int width)
 //    map->width = ft_size_arr(coords);
 	map->coords = NULL;
 	map->coords = ft_calloc(sizeof(int), width);
+	map->z_min = INT_MAX;
+	map->z_max = INT_MIN;
   //  map->line = malloc(sizeof(int) * map->width);
-	ft_fill_line(coords_char, &(map->coords));
+	ft_fill_line(map, coords_char, &(map->coords));
+//	printf("%d - %d\n", map->z_min, map->z_max);
 	map->y = y;
 	map->next = NULL;
 	return (map);
@@ -39,6 +46,10 @@ t_cam	*ft_init_cam()
 	cam->gamma = 0;
 	cam->shift_x = WIN_WIDTH / 3;
 	cam->shift_y = WIN_HEIGHT / 3;
+	cam->prev_shift_x = cam->shift_x;
+	cam->prev_shift_y = cam->shift_y;
+	cam->zoom_count = 0;
+	cam->projection = ISOMETRIC;
 	return (cam);
 }
 
@@ -56,12 +67,13 @@ t_fdf *ft_init_fdf()
 	return (fdf);
 }
 
-t_dot	ft_init_dot(int x, int y, int z)
+t_dot	ft_init_dot(int x, int y, int z, t_map *map)
 {
 	t_dot dot;
 
 	dot.x = x;
 	dot.y = y;
 	dot.z = z;
+	dot.color = get_default_color(z, map);
 	return (dot);
 }
