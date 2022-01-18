@@ -20,16 +20,6 @@ void	my_mlx_pixel_put(t_img img, int x, int y, int color)
 	}
 }
 
-//  void isometric(int *x, int *y, int z)
-//  {
-//  	int prev_x;
-//  	int prev_y;
-//  	prev_x = *x;
-//  	prev_y = *y;
-//  	*x = (prev_x - prev_y) * cos(0.523599);
-//  	*y = (prev_x + prev_y) * sin(0.523599) - z;
-//  }
-
 void ft_draw_line(t_dot dot1, t_dot dot2, t_fdf *fdf)
 {
 	int step_x;
@@ -86,7 +76,8 @@ void ft_draw_line(t_dot dot1, t_dot dot2, t_fdf *fdf)
 	while ((dot1.x != dot2.x) || (dot1.y != dot2.y))
 	{
 //		printf("*");
-		color = get_color(ft_init_dot(dot1.x, dot1.y, dot1_save.z, fdf->map), dot1_save, dot2, ft_abs(step_x), -ft_abs(step_y));
+		color = get_color(ft_init_dot(dot1.x, dot1.y, dot1_save.z, fdf), dot1_save, dot2, ft_abs(step_x), ft_abs(step_y));
+//		color = COLOR_1;
 		my_mlx_pixel_put(fdf->img, dot1.x, dot1.y, color);
 //		mlx_pixel_put(fdf->mlx_ptr, fdf->win_ptr, x, y, 0xffffff);
 		if (i != 0)
@@ -141,12 +132,12 @@ void ft_draw_map(t_fdf *fdf)
 		while (x < fdf->width)
 		{
 			if (x != fdf->width - 1)
-				ft_draw_line(ft_update(fdf, ft_init_dot(x, y, curr_y->coords[x], curr_y)), 
-				ft_update(fdf, ft_init_dot(x + 1, y, curr_y->coords[x + 1], curr_y)), fdf);
+				ft_draw_line(ft_update(fdf, ft_init_dot(x, y, curr_y->coords[x], fdf)), 
+				ft_update(fdf, ft_init_dot(x + 1, y, curr_y->coords[x + 1], fdf)), fdf);
 //				ft_draw_line(x, y, curr_y->coords[x], x + 1, y, curr_y->coords[x + 1], fdf);
 			if (y != fdf->height - 1)
-				ft_draw_line(ft_update(fdf, ft_init_dot(x, y, curr_y->coords[x], curr_y)), 
-				ft_update(fdf, ft_init_dot(x, y + 1, next_y->coords[x], next_y)), fdf);
+				ft_draw_line(ft_update(fdf, ft_init_dot(x, y, curr_y->coords[x], fdf)), 
+				ft_update(fdf, ft_init_dot(x, y + 1, next_y->coords[x], fdf)), fdf);
 //				ft_draw_line(x, y, curr_y->coords[x], x, y + 1, next_y->coords[x], fdf);
 		//	printf("%d - %d\n", i, j);
 			x++;

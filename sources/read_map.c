@@ -24,6 +24,23 @@ int ft_size_arr(char **arr)
     return (i);
 }
 
+void find_z_min_max(t_fdf *fdf)
+{
+    t_map *map = fdf->map;
+    int i;
+
+    i = 0;
+    while (i < fdf->height)
+    {
+        if (fdf->z_max < map->z_max)
+            fdf->z_max = map->z_max;
+        if (fdf->z_min > map->z_min)
+            fdf->z_min = map->z_min;
+        map = map->next;
+        i++;
+    }
+}
+
 void ft_read_map(int fd, t_fdf *fdf)
 {
     char    *line;
@@ -53,5 +70,6 @@ void ft_read_map(int fd, t_fdf *fdf)
         i++;
     }
     fdf->height = i;
+    find_z_min_max(fdf);
 //    fdf->width = map->width;
 }

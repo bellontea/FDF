@@ -36,13 +36,13 @@ int shift(int keycode, t_fdf *fdf)
 {
 	printf("%d\n", keycode);
 	if (keycode == NUM_PAD_UP || keycode == 65362)
-		fdf->cam->shift_y -= 50;
+		fdf->cam->shift_y -= 10;
 	else if (keycode == NUM_PAD_DOWN || keycode == 65364)
-		fdf->cam->shift_y += 50;
+		fdf->cam->shift_y += 10;
 	else if (keycode == NUM_PAD_LEFT || keycode == 65361)
-		fdf->cam->shift_x -= 50;
+		fdf->cam->shift_x -= 10;
 	else if (keycode == NUM_PAD_RIGHT || keycode == 65363)
-		fdf->cam->shift_x += 50;
+		fdf->cam->shift_x += 10;
 	ft_draw_map(fdf);
 	return (0);
 }
@@ -53,16 +53,10 @@ int mouse_zoom(int button, int x, int y, t_fdf *fdf)
 	if (fdf->cam->zoom < 4096 && button == 4)
 	{
 		fdf->cam->zoom *= 2;
-		fdf->cam->prev_shift_x = fdf->cam->shift_x;
-		fdf->cam->prev_shift_y = fdf->cam->shift_y;
-		fdf->cam->shift_x += (fdf->cam->shift_x - x);
-		fdf->cam->shift_y += (fdf->cam->shift_y - y);
 	}
 	else if (fdf->cam->zoom != 1 && button == 5)
 	{
 		fdf->cam->zoom /= 2;
-		fdf->cam->shift_x = fdf->cam->prev_shift_x;
-		fdf->cam->shift_y = fdf->cam->prev_shift_y;
 	}
 	else
 		return (0);

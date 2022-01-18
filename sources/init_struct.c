@@ -44,8 +44,8 @@ t_cam	*ft_init_cam()
 	cam->alpha = 0;
 	cam->beta = 0;
 	cam->gamma = 0;
-	cam->shift_x = WIN_WIDTH / 3;
-	cam->shift_y = WIN_HEIGHT / 3;
+	cam->shift_x = 0;
+	cam->shift_y = 0;
 	cam->prev_shift_x = cam->shift_x;
 	cam->prev_shift_y = cam->shift_y;
 	cam->zoom_count = 0;
@@ -64,16 +64,18 @@ t_fdf *ft_init_fdf()
 			&(fdf->img.line_length), &(fdf->img.endian));
 	fdf->cam = ft_init_cam();
 	set_win_close(fdf);
+	fdf->z_min = INT_MAX;
+	fdf->z_max = INT_MIN;
 	return (fdf);
 }
 
-t_dot	ft_init_dot(int x, int y, int z, t_map *map)
+t_dot	ft_init_dot(int x, int y, int z, t_fdf *fdf)
 {
 	t_dot dot;
 
 	dot.x = x;
 	dot.y = y;
 	dot.z = z;
-	dot.color = get_default_color(z, map);
+	dot.color = get_default_color(z, fdf);
 	return (dot);
 }

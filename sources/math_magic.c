@@ -45,14 +45,16 @@ t_dot	ft_update(t_fdf *fdf, t_dot dot)
 	dot.x *= fdf->cam->zoom;
 	dot.y *= fdf->cam->zoom;
 	dot.z *= fdf->cam->zoom;
+	dot.x -= (fdf->width * fdf->cam->zoom) / 2;
+	dot.y -= (fdf->height * fdf->cam->zoom) / 2;
 //	printf("before x = %d, y = %d, z = %d\n", dot.x, dot.y, dot.z);
 	rotate_x(&(dot.y), &(dot.z), fdf->cam->alpha);
 	rotate_y(&(dot.x), &(dot.z), fdf->cam->beta);
 	rotate_z(&(dot.x), &(dot.y), fdf->cam->gamma);
 	if (fdf->cam->projection == ISOMETRIC)
 		isometric(&(dot.x), &(dot.y), dot.z);
-	dot.x += fdf->cam->shift_x;
-	dot.y += fdf->cam->shift_y;
+	dot.x += WIN_WIDTH / 2 + fdf->cam->shift_x;
+	dot.y += WIN_HEIGHT / 2 + fdf->cam->shift_y;
 //	printf("x = %d, y = %d, z = %d\n", dot.x, dot.y, dot.z);
 	return (dot);
 }

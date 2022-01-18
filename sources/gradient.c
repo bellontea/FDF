@@ -12,14 +12,14 @@ double percent(int start, int end, int current)
 }
 
 
-int	get_default_color(int z, t_map *map)
+int	get_default_color(int z, t_fdf *fdf)
 {
 	double	percentage;
 
-	percentage = percent(map->z_min, map->z_max, z);
-	if (z == map->z_min)
+	percentage = percent(fdf->z_min, fdf->z_max, z);
+	if (z == fdf->z_min)
 		percentage = 0.0;
-	else if (z == map->z_max)
+	else if (z == fdf->z_max)
 		percentage = 1.0;
 //	printf("%d - %d\n", map->z_min, map->z_max);
 	if (percentage < 0.2)
@@ -46,8 +46,8 @@ int get_color(t_dot current, t_dot start, t_dot end, int delta_x, int delta_y)
     int     blue;
     double  percentage;
 
-    if (current.color == end.color)
-        return (current.color);
+   // if (current.color == end.color)
+     //   return (current.color);
     if (delta_x > delta_y)
         percentage = percent(start.x, end.x, current.x);
     else
