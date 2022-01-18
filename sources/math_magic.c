@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   math_magic.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/18 18:24:42 by mslyther          #+#    #+#             */
+/*   Updated: 2022/01/18 18:24:43 by mslyther         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
-void isometric(int *x, int *y, int z)
+void	isometric(int *x, int *y, int z)
 {
-	int prev_x;
-	int prev_y;
+	int	prev_x;
+	int	prev_y;
 
 	prev_x = *x;
 	prev_y = *y;
@@ -47,7 +59,6 @@ t_dot	ft_update(t_fdf *fdf, t_dot dot)
 	dot.z *= fdf->cam->zoom;
 	dot.x -= (fdf->width * fdf->cam->zoom) / 2;
 	dot.y -= (fdf->height * fdf->cam->zoom) / 2;
-//	printf("before x = %d, y = %d, z = %d\n", dot.x, dot.y, dot.z);
 	rotate_x(&(dot.y), &(dot.z), fdf->cam->alpha);
 	rotate_y(&(dot.x), &(dot.z), fdf->cam->beta);
 	rotate_z(&(dot.x), &(dot.y), fdf->cam->gamma);
@@ -55,6 +66,5 @@ t_dot	ft_update(t_fdf *fdf, t_dot dot)
 		isometric(&(dot.x), &(dot.y), dot.z);
 	dot.x += WIN_WIDTH / 2 + fdf->cam->shift_x;
 	dot.y += WIN_HEIGHT / 2 + fdf->cam->shift_y;
-//	printf("x = %d, y = %d, z = %d\n", dot.x, dot.y, dot.z);
 	return (dot);
 }

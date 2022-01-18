@@ -1,39 +1,67 @@
-NAME		=	fdf
-LIBFT		=	./libft_gnl/libft_gnl.a
-PATH_HEADER =	./includes/
-LIBFT_HEADERS = ./libft_gnl/includes/
-INCLUDES = -I$(PATH_HEADER) -I$(LIBFT_HEADERS)
-PATH_LIB 	=	./libft_gnl/
-HEADER  	=	./includes/fdf.h
-INC			=	/usr/include
-INCLIB		=	$(INC)/../lib
+NAME = fdf
 
-SOURCES	=	$(shell ls ./sources/*.c)
+INC=/usr/X11/include
+INCLIB=$(INC)/../lib
 
-SRCS		=	$(SOURCES)
-OBJS			=	$(SRCS:%.c=%.o) $(LIBFT)
+LIBRARIES =  -lmlx -lm -L$(MINILIBX_DIRECTORY) -L$(LIBFT_DIRECTORY)  -framework OpenGL -framework AppKit -L$(INCLIB) -lXext -lX11 -lm
+INCLUDES = -I$(HEADERS_DIRECTORY) -I$(MINILIBX_HEADERS) -I$(LIBFT_HEADERS)
 
-CFLAGS		=	#-Wall -Wextra -Werror
-LFLAGS		=	-L./mlx_linux -lmlx -L$(INCLIB) -lXext -lX11 -lm
-RM			=	rm -rf
-CC			=	gcc
+# Header files
+HEADERS_DIRECTORY = ./includes/
+HEADERS = $(shell ls ./includes/*.h)
 
-all:		run_libft $(NAME) 
+# MINILIBX
+MINILIBX = $(MINILIBX_DIRECTORY)libmlx.a
+MINILIBX_DIRECTORY = ./mlx/
+MINILIBX_HEADERS = $(MINILIBX_DIRECTORY)
 
-$(NAME):	${OBJS}
-			$(CC) -o $(NAME) ${OBJS} $(LFLAGS) 
+# Libft
+LIBFT = $(LIBFT_DIRECTORY)libft_gnl.a
+LIBFT_DIRECTORY = ./libft_gnl/
+LIBFT_HEADERS = $(LIBFT_DIRECTORY)/includes/
 
-run_libft:	
-			@make -C $(PATH_LIB)
+# Sources
+SOURCES = $(shell ls ./sources/*.c)
 
-%.o: 		%.c	
-			$(CC) $(CFLAGS) $(INCLUDES) -Imlx_linux -I$(INC) -c $< -o $@
-
+# OBJS files
+OBJECTS_DIRECTORY = objects/
+OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(SOURCES:.c=.o)) $(LIBFT)
+# Utils
+CC = gcc
+#FLAGS = -Wall -Wextra -Werror -o3
+# COLORS
+GREEN = \033[0;32m
+RED = \033[0;31m
+RESET = \033[0m
+.PHONY: all clean fclean re
+all: $(NAME)
+$(NAME): $(LIBFT) $(MINILIBX) $(OBJECTS) Makefile
+	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
+	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+$(OBJECTS_DIRECTORY)%.o :%.c $(HEADERS)
+	@mkdir -p $(dir $@)
+	@$(CC) $(FLAGS) -c 	$(INCLUDES) $< -o $@
+	@echo "$(GREEN).$(RESET)\c"
+$(LIBFT):
+	@echo "$(NAME): $(GREEN)Creating $(LIBFT)...$(RESET)"
+	@$(MAKE) -sC $(LIBFT_DIRECTORY)
+$(MINILIBX):
+	@echo "$(NAME): $(GREEN)Creating $(MINILIBX)...$(RESET)"
+	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
 clean:
-			$(RM) ${OBJS}
-			@make -C $(PATH_LIB) clean
-fclean:		clean
-			$(RM) $(NAME)
-			@make -C $(PATH_LIB) fclean
-re:			fclean all
-.PHONY: clean fclean re all
+	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
+	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
+	@rm -rf $(OBJECTS_DIRECTORY)
+	@echo "$(NAME): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
+	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
+fclean: clean
+	@rm -f $(MINILIBX)
+	@echo "$(NAME): $(RED)$(MINILIBX) was deleted$(RESET)"
+	@rm -f $(LIBFT)
+	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
+re:
+	@$(MAKE) fclean
+	@$(MAKE) all
