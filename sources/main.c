@@ -6,7 +6,7 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:00:09 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/19 17:48:22 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:17:09 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ int	main(int argc, char **argv)
 {
 	t_fdf	*fdf;
 	int		fd;
-	t_map	*map;
 
 	if (argc != 2)
 	{
-		printf("Error: too many or no arguments\n");
+		ft_putstr_fd("Error: too many or no arguments\n", 2);
 		return (1);
 	}
 	fd = open(argv[1], O_RDWR);

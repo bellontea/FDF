@@ -6,7 +6,7 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:49:10 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/19 17:48:22 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 18:48:35 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ t_fdf	*ft_fdf_malloc(void);
 void	ft_change_proection(int keycode, t_fdf *fdf);
 void	ft_mouse_zoom(int keycode, t_fdf *fdf);
 void	ft_shift(int keycode, t_fdf *fdf);
-int		rotate(int keycode, t_fdf *fdf);
+int		ft_rotate(int keycode, t_fdf *fdf);
 
 #endif

@@ -28,12 +28,12 @@ OBJECTS_DIRECTORY = objects/
 OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(SOURCES:.c=.o)) $(LIBFT)
 # Utils
 CC = gcc
-#FLAGS = -Wall -Wextra -Werror -o3
+FLAGS = -Wall -Wextra -Werror -o3
 # COLORS
 GREEN = \033[0;32m
 RED = \033[0;31m
 RESET = \033[0m
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
 all: $(NAME)
 $(NAME): $(LIBFT) $(MINILIBX) $(OBJECTS) Makefile
 	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
@@ -65,3 +65,5 @@ fclean: clean
 re:
 	@$(MAKE) fclean
 	@$(MAKE) all
+
+bonus: all
