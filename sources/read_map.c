@@ -6,7 +6,7 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:01:45 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/18 20:35:13 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:48:22 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_size_arr(char **arr)
 	return (i);
 }
 
-void	find_z_min_max(t_fdf *fdf)
+void	ft_find_z_min_max(t_fdf *fdf)
 {
 	t_map	*map;
 	int		i;

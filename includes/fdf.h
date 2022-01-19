@@ -6,7 +6,7 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:49:10 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/18 21:04:36 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:48:22 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ typedef struct s_steps
 {
 	double	x;
 	double	y;
-	double	sum_x;
-	double	sum_y;
 }				t_steps;
 
 typedef struct s_cam
@@ -109,7 +107,15 @@ int		get_color(t_dot current, t_dot start, t_dot end, t_dot delta);
 int		get_default_color(int z, t_fdf *fdf);
 int		ft_win_close(t_fdf *fdf);
 int		ft_key_hooks(int keycode, t_fdf *fdf);
-void	find_z_min_max(t_fdf *fdf);
+void	ft_find_z_min_max(t_fdf *fdf);
 int		ft_free_array(char **array);
+int		ft_max(int a, int b);
+int		ft_min(int a, int b);
+void	ft_fill_line(t_map *map, char **coords_char, int **coords);
+t_fdf	*ft_fdf_malloc(void);
+void	ft_change_proection(int keycode, t_fdf *fdf);
+void	ft_mouse_zoom(int keycode, t_fdf *fdf);
+void	ft_shift(int keycode, t_fdf *fdf);
+int		rotate(int keycode, t_fdf *fdf);
 
 #endif

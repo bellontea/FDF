@@ -6,7 +6,7 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:20:35 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/18 20:50:58 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 16:40:13 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	get_color(t_dot current, t_dot start, t_dot end, t_dot delta)
 	int		blue;
 	double	percentage;
 
+	if (current.color == end.color)
+		return (current.color);
 	if (delta.x > delta.y)
 		percentage = percent(start.x, end.x, current.x);
 	else

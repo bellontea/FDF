@@ -6,18 +6,11 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:00:09 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/18 20:35:28 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:48:22 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int	ft_min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
 
 int	main(int argc, char **argv)
 {
@@ -40,7 +33,7 @@ int	main(int argc, char **argv)
 	if (fdf == NULL)
 		ft_win_close(fdf);
 	ft_read_map(fd, fdf);
-	find_z_min_max(fdf);
+	ft_find_z_min_max(fdf);
 	close(fd);
 	fdf->cam->zoom = ft_min((WIN_WIDTH / fdf->width) / 2,
 			(WIN_HEIGHT / fdf->height) / 2);

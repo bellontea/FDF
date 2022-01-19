@@ -6,27 +6,11 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:45:14 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/18 20:33:09 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:40:42 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	ft_fill_line(t_map *map, char **coords_char, int **coords)
-{
-	int	i;
-
-	i = 0;
-	while (coords_char[i])
-	{
-		(*coords)[i] = ft_atoi(coords_char[i]);
-		if (map->z_min > (*coords)[i])
-			map->z_min = (*coords)[i];
-		if (map->z_max < (*coords)[i])
-			map->z_max = (*coords)[i];
-		i++;
-	}
-}
 
 t_map	*ft_init_map(int y, char **coords_char, int width)
 {
@@ -62,20 +46,6 @@ t_cam	*ft_init_cam(void)
 	cam->prev_shift_y = cam->shift_y;
 	cam->projection = ISOMETRIC;
 	return (cam);
-}
-
-t_fdf	*ft_fdf_malloc(void)
-{
-	t_fdf	*fdf;
-
-	fdf = malloc(sizeof(t_fdf));
-	if (fdf == NULL)
-		return (NULL);
-	fdf->cam = NULL;
-	fdf->map = NULL;
-	fdf->mlx_ptr = NULL;
-	fdf->win_ptr = NULL;
-	return (fdf);
 }
 
 t_fdf	*ft_init_fdf(void)

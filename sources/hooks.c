@@ -6,7 +6,7 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:52:33 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/18 20:40:50 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 17:46:43 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_win_close(t_fdf *fdf)
 	exit(0);
 }
 
-int	rotate(int keycode, t_fdf *fdf)
+int	ft_rotate(int keycode, t_fdf *fdf)
 {
 	if (keycode == KEY_A)
 		fdf->cam->gamma += 0.1;
@@ -59,7 +59,7 @@ int	rotate(int keycode, t_fdf *fdf)
 	return (0);
 }
 
-int	shift(int keycode, t_fdf *fdf)
+void	ft_shift(int keycode, t_fdf *fdf)
 {
 	if (keycode == KEY_UP)
 		fdf->cam->shift_y -= 10;
@@ -70,7 +70,6 @@ int	shift(int keycode, t_fdf *fdf)
 	else if (keycode == KEY_RIGHT)
 		fdf->cam->shift_x += 10;
 	ft_draw_map(fdf);
-	return (0);
 }
 
 void	ft_mouse_zoom(int keycode, t_fdf *fdf)
@@ -84,7 +83,7 @@ void	ft_mouse_zoom(int keycode, t_fdf *fdf)
 	ft_draw_map(fdf);
 }
 
-void	change_proection(int keycode, t_fdf *fdf)
+void	ft_change_proection(int keycode, t_fdf *fdf)
 {
 	fdf->cam->alpha = 0;
 	fdf->cam->beta = 0;
@@ -94,23 +93,4 @@ void	change_proection(int keycode, t_fdf *fdf)
 	else if (keycode == KEY_Z || keycode == 122)
 		fdf->cam->projection = ISOMETRIC;
 	ft_draw_map(fdf);
-}
-
-int	ft_key_hooks(int keycode, t_fdf *fdf)
-{
-	printf("%d\n", keycode);
-	if (keycode == KEY_ESC)
-		ft_win_close(fdf);
-	else if (keycode == KEY_UP || keycode == KEY_DOWN
-		|| keycode == KEY_LEFT || keycode == KEY_RIGHT)
-		shift(keycode, fdf);
-	else if (keycode == KEY_PLUS || keycode == KEY_MINUS)
-		ft_mouse_zoom(keycode, fdf);
-	else if (keycode == KEY_A || keycode == KEY_D
-		|| keycode == KEY_S || keycode == KEY_W
-		|| keycode == KEY_Q || keycode == KEY_E)
-		rotate(keycode, fdf);
-	else if (keycode == KEY_Z || keycode == KEY_X)
-		change_proection(keycode, fdf);
-	return (0);
 }
