@@ -6,7 +6,7 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 17:36:20 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/19 17:41:13 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:01:55 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ int	ft_min(int a, int b)
 	if (a < b)
 		return (a);
 	return (b);
+}
+
+int	ft_abs(int a)
+{
+	if (a >= 0)
+		return (a);
+	return (-a);
 }
 
 void	ft_fill_line(t_map *map, char **coords_char, int **coords)

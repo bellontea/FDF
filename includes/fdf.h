@@ -6,13 +6,14 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:49:10 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/19 18:48:35 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:02:06 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# include <math.h>
 # include <mlx.h>
 # include "libft.h"
 # include "get_next_line.h"
@@ -26,7 +27,6 @@
 # include <errno.h>
 # include <sys/wait.h>
 # include <string.h>
-# include <math.h>
 # include "keys.h"
 
 # define WIN_WIDTH 1920
@@ -117,5 +117,6 @@ void	ft_change_proection(int keycode, t_fdf *fdf);
 void	ft_mouse_zoom(int keycode, t_fdf *fdf);
 void	ft_shift(int keycode, t_fdf *fdf);
 int		ft_rotate(int keycode, t_fdf *fdf);
+int		ft_abs(int a);
 
 #endif

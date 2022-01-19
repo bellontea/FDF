@@ -6,7 +6,7 @@
 /*   By: mslyther <mslyther@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 18:25:06 by mslyther          #+#    #+#             */
-/*   Updated: 2022/01/19 17:38:13 by mslyther         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:02:27 by mslyther         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	ft_draw_line(t_dot start, t_dot end, t_fdf *fdf)
 	current = start;
 	x = (double)current.x;
 	y = (double)current.y;
-	delta.x = abs(end.x - start.x);
-	delta.y = abs(end.y - start.y);
+	delta.x = ft_abs(end.x - start.x);
+	delta.y = ft_abs(end.y - start.y);
 	steps.x = (double)(end.x - start.x) / (double)ft_max(delta.x, delta.y);
 	steps.y = (double)(end.y - start.y) / (double)ft_max(delta.x, delta.y);
 	while ((int)(end.x - x) || (int)(end.y - y))
