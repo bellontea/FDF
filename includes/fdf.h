@@ -29,8 +29,8 @@
 # include <string.h>
 # include "keys.h"
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT	1080
+# define WIN_WIDTH 1600
+# define WIN_HEIGHT	1000
 # define PARALLEL 0
 # define ISOMETRIC 1
 # define COLOR_1 0x0066ff
